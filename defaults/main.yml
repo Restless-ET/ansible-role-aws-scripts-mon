@@ -1,0 +1,6 @@
+---
+aws_scripts_mon_base_directory: /opt
+aws_scripts_mon_cron_user: "{{ ansible_user }}"
+aws_scripts_mon_options: "--disk-space-util --disk-path=/"
+aws_scripts_mon_access_key: null
+aws_scripts_mon_secret_key: null

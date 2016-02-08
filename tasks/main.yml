@@ -1,0 +1,28 @@
+---
+- name: Exit if AWS keys were not defined
+  fail: msg="The AWS access and/or secret key(s) is/are not defined!"
+  when: aws_scripts_mon_access_key is none or aws_scripts_mon_secret_key is none
+
+- include: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Download and install the monitoring scripts
+  unarchive: src=http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-{{ aws_scripts_mon_version }}.zip
+             dest={{ aws_scripts_mon_base_directory }}
+             owner={{ aws_scripts_mon_cron_user }}
+             creates={{ aws_scripts_mon_base_directory }}/aws-scripts-mon/mon-put-instance-data.pl
+             copy=no
+
+- name: Configure the credentials for the script
+  template: src=awscreds.conf.j2
+            dest={{ aws_scripts_mon_base_directory }}/aws-scripts-mon/awscreds.conf
+            owner={{ aws_scripts_mon_cron_user }} mode=0400
+
+- name: Add a cron job to run the monitoring scripts
+  cron: name="aws_scripts_mon"
+        user="{{ aws_scripts_mon_cron_user }}"
+        minute="*/5"
+        job="{{ aws_scripts_mon_base_directory }}/aws-scripts-mon/mon-put-instance-data.pl --from-cron {{ aws_scripts_mon_options }}"

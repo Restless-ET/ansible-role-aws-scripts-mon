@@ -1,0 +1,12 @@
+---
+- name: 'Installing YUM dependencies'
+  yum:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - zip
+    - unzip
+    - perl-DateTime
+    - perl-Sys-Syslog
+    - perl-LWP-Protocol-https
+    - perl-Digest-SHA

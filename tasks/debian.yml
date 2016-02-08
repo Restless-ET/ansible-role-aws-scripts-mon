@@ -1,0 +1,9 @@
+---
+- name: 'Installing APT dependencies'
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - unzip
+    - libwww-perl
+    - libdatetime-perl
