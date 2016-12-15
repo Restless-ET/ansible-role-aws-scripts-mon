@@ -1,7 +1,7 @@
 ---
 - name: Exit if AWS keys were not defined
   fail: msg="The AWS access and/or secret key(s) is/are not defined!"
-  when: aws_scripts_mon_access_key is none or aws_scripts_mon_secret_key is none
+  when: not aws_scripts_mon_use_iam|bool and (aws_scripts_mon_access_key is none or aws_scripts_mon_secret_key is none)
 
 - include: debian.yml
   when: ansible_os_family == 'Debian'
@@ -20,6 +20,7 @@
   template: src=awscreds.conf.j2
             dest={{ aws_scripts_mon_base_directory }}/aws-scripts-mon/awscreds.conf
             owner={{ aws_scripts_mon_cron_user }} mode=0400
+  when: not aws_scripts_mon_use_iam|bool
 
 - name: Add a cron job to run the monitoring scripts
   cron: name="aws_scripts_mon"
