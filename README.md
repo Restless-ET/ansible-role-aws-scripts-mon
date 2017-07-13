@@ -19,6 +19,7 @@ Role Variables
 - `aws_scripts_mon_options` - The monitoring script options (`--from-cron` is always assumed). Defaults to: `"--disk-space-util --disk-path=/"`.
 - `aws_scripts_mon_access_key` - Your AWS Access Key. You need to define this or the role will fail to execute.
 - `aws_scripts_mon_secret_key` - Your AWS Secret Key. You need to define this or the role will fail to execute.
+- `aws_scripts_mon_use_iam` - Set to 'true' if you're authenticating with AWS IAM role permissions instead of AWS access keys. Defaults to 'false'.
 
 
 Dependencies
