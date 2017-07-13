@@ -17,9 +17,9 @@ Role Variables
 - `aws_scripts_mon_base_directory` - The base directory where the scripts will be installed. Defaults to: `/opt`
 - `aws_scripts_mon_cron_user` - The user for which the scripts will run as. Defaults to: `{{ ansible_user }}`
 - `aws_scripts_mon_options` - The monitoring script options (`--from-cron` is always assumed). Defaults to: `"--disk-space-util --disk-path=/"`.
-- `aws_scripts_mon_access_key` - Your AWS Access Key. You need to define this or the role will fail to execute.
-- `aws_scripts_mon_secret_key` - Your AWS Secret Key. You need to define this or the role will fail to execute.
-- `aws_scripts_mon_use_iam` - Set to 'true' if you're authenticating with AWS IAM role permissions instead of AWS access keys. Defaults to 'false'.
+- `aws_scripts_mon_access_key` - Your AWS Access Key. You need to define this (if not using IAM) or the role will fail to execute.
+- `aws_scripts_mon_secret_key` - Your AWS Secret Key. You need to define this (if not using IAM) or the role will fail to execute.
+- `aws_scripts_mon_use_iam` - If you want to authenticate with AWS IAM role permissions instead of access keys set this to `true`, this way the keys will not be considered as required. Defaults to: `false`.
 
 
 Dependencies
