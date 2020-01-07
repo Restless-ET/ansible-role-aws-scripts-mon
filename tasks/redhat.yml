@@ -9,4 +9,3 @@
       - perl-LWP-Protocol-https
       - perl-Digest-SHA
     state: present
-  with_items:
